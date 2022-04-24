@@ -19,8 +19,8 @@ const ProductAll = () => {
     <div>
       <Container>
         <Row>
-          {productList.map((menu, idx) => (
-            <Col lg={3} key={idx}>
+          {productList.map((menu) => (
+            <Col lg={3} key={menu.id}>
               <ProductCard item={menu} />
             </Col>
           ))}

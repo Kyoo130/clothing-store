@@ -1,7 +1,9 @@
 .login-button {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     margin: 20px;
+    cursor: pointer;
 }
 
 .login-button div {
@@ -42,4 +44,9 @@
 
 .menu-search input:focus {
     outline:none
+}
+
+.product-img {
+    display: flex;
+    justify-content: flex-end;
 }
