@@ -1,5 +1,7 @@
 import "./App.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route } from "react-router-dom";
+
 import { Login, ProductAll, ProductDetail } from "./pages";
 import {Navbar} from "./components";
 
