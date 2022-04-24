@@ -7,7 +7,6 @@ const Login = ({setAuthenticate}) => {
 
   const loginUser = (event) => {
     event.preventDefault()
-    console.log("login 클릭")
     setAuthenticate(true);
     navigate("/")
   }

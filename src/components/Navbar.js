@@ -21,6 +21,14 @@ const Navbar = () => {
   const goToLogin = () => {
     navigate("/login");
   };
+
+  const search = (event) => {
+    if (event.key === "Enter") {
+      let keyword = event.target.value;
+      navigate(`/?q=${keyword}`);
+    }
+  };
+
   return (
     <div>
       <div>
@@ -34,6 +42,7 @@ const Navbar = () => {
           width={100}
           src="https://logos-world.net/wp-content/uploads/2020/04/HM-Logo-1999-present.jpg"
           alt="logo"
+          onClick={() => {navigate("/")}}
         />
       </div>
       <div className="menu-area">
@@ -44,7 +53,11 @@ const Navbar = () => {
         </ul>
         <div className="menu-search">
           <FontAwesomeIcon icon={faSearch} />
-          <input type="text" placeholder="제품검색" />
+          <input
+            type="text"
+            placeholder="제품검색"
+            onKeyPress={(event) => search(event)}
+          />
         </div>
       </div>
     </div>
