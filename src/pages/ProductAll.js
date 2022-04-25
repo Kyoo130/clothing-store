@@ -1,36 +1,52 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { ProductCard } from "../components";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Alert } from "react-bootstrap";
 
 const ProductAll = () => {
-  const [productList, setProductList] = useState([]);
+  const [products, setProducts] = useState([]);
   const [query, setQuery] = useSearchParams();
+  const [error, setError] = useState("");
 
   const getProducts = async () => {
-    let  searchQuery = query.get("q") || "";
-    let url = `http://localhost:4000/products?q=${searchQuery}`;
-    let response = await fetch(url);
-    let data = await response.json();
-    setProductList(data);
+    try {
+      let keyword = query.get("q") || "";
+      let url = `https://my-json-server.typicode.com/legobitna/hnm-react-router/products?q=${keyword}`;
+      let response = await fetch(url);
+      let data = await response.json();
+      if (data.length < 1) {
+        if (keyword !== "") {
+          setError(`${keyword}와 일치하는 상품이 없습니다`);
+        } else {
+          throw new Error("결과가 없습니다");
+        }
+      }
+      setProducts(data);
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   useEffect(() => {
     getProducts();
   }, [query]);
-
   return (
-    <div>
-      <Container>
+    <Container>
+      {error ? (
+        <Alert variant="danger" className="text-center">
+          {error}
+        </Alert>
+      ) : (
         <Row>
-          {productList.map((menu) => (
-            <Col lg={3} key={menu.id}>
-              <ProductCard item={menu} />
-            </Col>
-          ))}
+          {products.length > 0 &&
+            products.map((item) => (
+              <Col md={3} sm={12} key={item.id}>
+                <ProductCard item={item} />
+              </Col>
+            ))}
         </Row>
-      </Container>
-    </div>
+      )}
+    </Container>
   );
 };
 
